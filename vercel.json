@@ -13,10 +13,10 @@
   "routes": [
     {
       "src": "/(.*)",
-      "dest": "/index.html"
+      "dest": "index.html"
     },
     {
-      "src": "/(.*)",
+      "src": "/api/(.*)",
       "dest": "/app.js"
     }
   ]
