@@ -11,12 +11,7 @@ app.use(bodyParser.json());
 
 // MongoDB Atlas connection string
 const dbURI = "mongodb+srv://john:john@john.gevwwjw.mongodb.net/wishList?retryWrites=true&w=majority&appName=john";
-mongoose.connect(dbURI, { 
-    useNewUrlParser: true, 
-    useUnifiedTopology: true, 
-    serverSelectionTimeoutMS: 10000,  // 10 ثوانٍ كحد أقصى قبل فشل الاتصال
-    socketTimeoutMS: 60000            // 60 ثانية قبل إنهاء الاتصال
-})
+mongoose.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true })
     .then(() => console.log('Connected to MongoDB'))
     .catch(err => console.log('Error connecting to MongoDB: ', err));
 
