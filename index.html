@@ -215,18 +215,18 @@
             fetchWishlist();
         };
 
-        function fetchWishlist() {
+        
+function fetchWishlist() {
     fetch('/wishlist')
         .then(response => response.json())
         .then(data => {
             const wishlist = document.getElementById('wishlist');
-            wishlist.innerHTML = ''; // مسح القائمة الحالية
-
+            wishlist.innerHTML = ''; // Clear current list
             data.forEach(item => {
                 const li = document.createElement('li');
                 li.textContent = item.name;
 
-                // زر الحذف
+                // Create delete button
                 const deleteButton = document.createElement('button');
                 deleteButton.textContent = 'Delete';
                 deleteButton.onclick = () => deleteItem(item._id);
@@ -234,6 +234,8 @@
                 li.appendChild(deleteButton);
                 wishlist.appendChild(li);
             });
+        });
+}
 
             // تمرير القائمة تلقائيًا للأسفل عند تحديثها
             wishlist.scrollTop = wishlist.scrollHeight;
