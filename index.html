@@ -218,27 +218,46 @@
         };
 
         
-function fetchWishlist() {
-            fetch('/wishlist')
-                .then(response => response.json())
-                .then(data => {
-                    const wishlist = document.getElementById('wishlist');
-                    wishlist.innerHTML = ''; // Clear current list
-                    data.forEach(item => {
-                        const li = document.createElement('li');
-                        li.textContent = item.name;
+        function fetchWishlist() {
+    fetch('/wishlist')
+        .then(response => response.json())
+        .then(data => {
+            const wishlist = document.getElementById('wishlist');
+            wishlist.innerHTML = ''; // Clear current list
+            data.forEach(item => {
+                const li = document.createElement('li');
 
-                        // Create delete button
-                        const deleteButton = document.createElement('button');
-                        deleteButton.textContent = 'Delete';
-                        deleteButton.onclick = () => deleteItem(item._id);
+                // النص الرئيسي
+                const textSpan = document.createElement('span');
+                textSpan.textContent = item.name;
 
-                        li.appendChild(deleteButton);
-                        wishlist.appendChild(li);
-                    });
-                });
-    
+                // زر النسخ
+                const copyButton = document.createElement('button');
+                copyButton.textContent = '📋';
+                copyButton.onclick = () => copyText(item.name);
 
+                // زر الحذف
+                const deleteButton = document.createElement('button');
+                deleteButton.textContent = '❌';
+                deleteButton.onclick = () => deleteItem(item._id);
+
+                // إضافة العناصر إلى القائمة
+                li.appendChild(textSpan);
+                li.appendChild(copyButton);
+                li.appendChild(deleteButton);
+                wishlist.appendChild(li);
+            });
+        });
+}
+
+// وظيفة لنسخ النص
+function copyText(text) {
+    navigator.clipboard.writeText(text).then(() => {
+
+    }).catch(err => {
+        console.error('فشل النسخ', err);
+    });
+}
        
 
         // Add an item to the wishlist
