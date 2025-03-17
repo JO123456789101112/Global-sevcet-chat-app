@@ -1,7 +1,7 @@
 {
   "name": "list-app",
   "version": "1.0.0",
-  "description": "",
+  "description": "A simple Express.js app with MongoDB",
   "main": "app.js",
   "scripts": {
     "start": "node app.js",
@@ -13,8 +13,13 @@
   "dependencies": {
     "express": "^4.17.1",
     "mongoose": "^7.0.0",
+    "mongodb": "^5.7.0",
     "cors": "^2.8.5",
     "body-parser": "^1.20.2",
-    "path": "^0.12.7"
+    "path": "^0.12.7",
+    "dotenv": "^16.3.1"
+  },
+  "engines": {
+    "node": "18.x"
   }
 }
