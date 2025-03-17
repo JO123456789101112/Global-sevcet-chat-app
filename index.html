@@ -198,6 +198,8 @@
 
 
         }
+
+
     </style>
 </head>
 <body>
@@ -213,34 +215,74 @@
     <ul id="wishlist">
         <!-- Wishlist items will be populated here -->
     </ul>
-
+        <button onclick="copyChat()">Copy Chat 📋</button>
     <script>
+
+
+
+        function copyChat() {
+    let chatItems = document.querySelectorAll("#wishlist li");
+    let chatText = Array.from(chatItems).map(item => item.firstChild.textContent).join("\n");
+    
+    if (chatText.trim() === "") {
+        alert("Chat is empty!");
+        return;
+    }
+
+    navigator.clipboard.writeText(chatText).then(() => {
+        alert("Chat copied to clipboard!");
+    }).catch(err => {
+        console.error("Failed to copy:", err);
+    });
+}
+
+        
         // Fetch and display wishlist items from the server
         window.onload = function() {
             fetchWishlist();
         };
 
-        
 function fetchWishlist() {
-            fetch('/wishlist')
-                .then(response => response.json())
-                .then(data => {
-                    const wishlist = document.getElementById('wishlist');
-                    wishlist.innerHTML = ''; // Clear current list
-                    data.forEach(item => {
-                        const li = document.createElement('li');
-                        li.textContent = item.name;
+    fetch('/wishlist')
+        .then(response => response.json())
+        .then(data => {
+            const wishlist = document.getElementById('wishlist');
+            wishlist.innerHTML = ''; // Clear current list
+            data.forEach(item => {
+                const li = document.createElement('li');
 
-                        // Create delete button
-                        const deleteButton = document.createElement('button');
-                        deleteButton.textContent = 'Delete';
-                        deleteButton.onclick = () => deleteItem(item._id);
+                // Message text
+                const textSpan = document.createElement('span');
+                textSpan.textContent = item.name;
 
-                        li.appendChild(deleteButton);
-                        wishlist.appendChild(li);
-                    });
-                });
-    
+                // Create Copy Button
+                const copyButton = document.createElement('button');
+                copyButton.textContent = '📋 Copy';
+                copyButton.onclick = () => copyText(item.name);
+
+                // Create Delete Button
+                const deleteButton = document.createElement('button');
+                deleteButton.textContent = '❌ Delete';
+                deleteButton.onclick = () => deleteItem(item._id);
+
+                // Append elements
+                li.appendChild(textSpan);
+                li.appendChild(copyButton);
+                li.appendChild(deleteButton);
+                wishlist.appendChild(li);
+            });
+        });
+}
+
+// Function to copy text
+function copyText(text) {
+    navigator.clipboard.writeText(text).then(() => {
+        alert("Copied: " + text);
+    }).catch(err => {
+        console.error("Failed to copy:", err);
+    });
+}
+
 
 
             // تمرير القائمة تلقائيًا للأسفل عند تحديثها
