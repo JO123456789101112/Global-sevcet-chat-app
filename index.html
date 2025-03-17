@@ -219,31 +219,42 @@
 
         
 function fetchWishlist() {
-            fetch('/wishlist')
-                .then(response => response.json())
-                .then(data => {
-                    const wishlist = document.getElementById('wishlist');
-                    wishlist.innerHTML = ''; // Clear current list
-                    data.forEach(item => {
-                        const li = document.createElement('li');
-                        li.textContent = item.name;
+    fetch('/wishlist')
+        .then(response => response.json())
+        .then(data => {
+            const wishlist = document.getElementById('wishlist');
+            wishlist.innerHTML = ''; // Clear current list
+            data.forEach(item => {
+                const li = document.createElement('li');
+                li.textContent = item.name;
 
-                        // Create delete button
-                        const deleteButton = document.createElement('button');
-                        deleteButton.textContent = 'Delete';
-                        deleteButton.onclick = () => deleteItem(item._id);
+                // زر النسخ
+                const copyButton = document.createElement('button');
+                copyButton.textContent = '📋';
+                copyButton.onclick = () => copyText(item.name);
 
-                        li.appendChild(deleteButton);
-                        wishlist.appendChild(li);
-                    });
-                });
-    
+                // زر الحذف
+                const deleteButton = document.createElement('button');
+                deleteButton.textContent = 'Delete';
+                deleteButton.onclick = () => deleteItem(item._id);
 
-
-            // تمرير القائمة تلقائيًا للأسفل عند تحديثها
-
-    
+                // إضافة الأزرار للعنصر
+                li.appendChild(copyButton);
+                li.appendChild(deleteButton);
+                wishlist.appendChild(li);
+            });
+        });
 }
+
+// دالة لنسخ النص إلى الحافظة
+function copyText(text) {
+    navigator.clipboard.writeText(text).then(() => {
+        alert('تم نسخ النص: ' + text);
+    }).catch(err => {
+        console.error('فشل النسخ: ', err);
+    });
+}
+
        
 
         // Add an item to the wishlist
