@@ -241,14 +241,9 @@ function fetchWishlist() {
                     });
                 });
     
-
-
-            // تمرير القائمة تلقائيًا للأسفل عند تحديثها
-
     
 }
        
-
         // Add an item to the wishlist
         function addItem() {
             const itemInput = document.getElementById('item');
@@ -268,7 +263,6 @@ function fetchWishlist() {
                 });
             }
         }
-
         // Delete an item from the wishlist
         function deleteItem(itemId) {
             fetch(`/wishlist/${itemId}`, {
